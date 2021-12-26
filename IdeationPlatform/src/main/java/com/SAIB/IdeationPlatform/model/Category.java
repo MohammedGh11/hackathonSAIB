@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -14,12 +15,15 @@ import javax.persistence.Table;
 public class Category {
 		
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO.IDENTITY)
-	@Column(name = "cat_ID")
+	@Column(name = "cat_id")
 	private long catID;
 	
 	@Column(name = "cat_name")
 	private String catName;
+	
+	@Column(name = "creation_date")
+	private Date creationDate;
+	
 	public Category() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -52,8 +56,7 @@ public class Category {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	@Column(name = "creation_date")
-	private Date creationDate;
+	
 	
 	
 	
