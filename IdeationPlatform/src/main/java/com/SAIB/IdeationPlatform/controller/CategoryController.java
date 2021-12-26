@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,5 +53,17 @@ public class CategoryController {
 		return response;
 	
 	}
+	
+	@GetMapping("/category/{categoryNumber}")
+	public ResponseEntity<ApiSuccessPayload> getCategorybyCategoryNumber(@PathVariable long categoryNumber)
+	{
+		Category category=categoryService.getCategoryById(categoryNumber);
+		
+		ApiSuccessPayload payload=ApiSuccessPayload.build(category, "Success",HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
+		return response;
+	}
+	
+	
 	
 }

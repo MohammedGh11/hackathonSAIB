@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.SAIB.IdeationPlatform.config.ApiSuccessPayload;
 import com.SAIB.IdeationPlatform.model.Post;
 import com.SAIB.IdeationPlatform.service.PostService;
@@ -37,17 +36,62 @@ public class PostController {
 		return response;
 		
 	}
-	
-	@GetMapping("/post/{postNumber}")
-	public ResponseEntity<ApiSuccessPayload> getPostbyPostNumber(@PathVariable long postNumber)
+	@GetMapping("/posts/all/sorted")
+	public ResponseEntity<ApiSuccessPayload> getAllPosts(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam String sortBy ){
+		
+		
+		List<Post> list=postService.getAllPosts(pageNo, pageSize ,sortBy);
+		HttpStatus status=HttpStatus.OK;
+		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Posts Found",status);
+		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload, status);
+		return response;
+		
+		
+	}
+	@GetMapping("/post/{postId}")
+	public ResponseEntity<ApiSuccessPayload> getPostbyPostNumber(@PathVariable long postId)
 	{
-		Post post=postService.getPostByPostNumber(postNumber);
+		Post post=postService.getPostByPostNumber(postId);
 		
 		ApiSuccessPayload payload=ApiSuccessPayload.build(post, "Success",HttpStatus.OK);
 		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
 		return response;
 	}
 	
+	@GetMapping("/post/upvote/{postId}")
+	public ResponseEntity<ApiSuccessPayload> upVoteByPostId(@PathVariable long postId)
+	{
+	
+		
+		ResponseEntity<ApiSuccessPayload> response=null;
+		
+		String result=postService.upVoteByPostId(postId);
+		if(result.equalsIgnoreCase(Results.SUCCESS))
+		{
+			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
+			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+		}
+		
+		return response;
+	}
+	
+	
+	@GetMapping("/post/downvote/{postId}")
+	public ResponseEntity<ApiSuccessPayload> downVoteByPostId(@PathVariable long postId)
+	{
+	
+		
+		ResponseEntity<ApiSuccessPayload> response=null;
+		
+		String result=postService.downVoteByPostId(postId);
+		if(result.equalsIgnoreCase(Results.SUCCESS))
+		{
+			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
+			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+		}
+		
+		return response;
+	}
 	
 	@PostMapping("/post")
 	public ResponseEntity<ApiSuccessPayload> addPost(@RequestBody Post post)

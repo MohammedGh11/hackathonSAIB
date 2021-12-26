@@ -1,6 +1,9 @@
 package com.SAIB.IdeationPlatform.model;
 
-import java.util.Date;
+
+
+import java.time.LocalDateTime;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "users")
@@ -21,68 +26,152 @@ public class User {
 	
 	@Column(name = "first_name")
 	private String firstName;
-	@Column(name = "email")
-	private String email;
 	@Column(name = "last_name")
 	private String lastName;
+	@Column(name = "email")
+	private String email;
+	@Column(name = "password")
+	private String password;
 	@Column(name = "user_type")
 	private String userType;
+	@CreatedDate
 	@Column(name = "creation_date")
-	private Date creationDate;
+	private LocalDateTime creationDate;
+	
+	
+	
+	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(long userId, String firstName, String email, String lastName, String userType, Date creationDate) {
+
+
+
+
+	public User(long userId, String firstName,String lastName, String email,  String password, String userType,
+			LocalDateTime creationDate) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
-		this.email = email;
 		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
 		this.userType = userType;
 		this.creationDate = creationDate;
 	}
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", email=" + email + ", lastName="
-				+ lastName + ", userType=" + userType + ", creationDate=" + creationDate + "]";
-	}
+
+
+
+
 	public long getUserId() {
 		return userId;
 	}
+
+
+
+
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
+
+
+
+
 	public String getFirstName() {
 		return firstName;
 	}
+
+
+
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getMiddleName() {
+
+
+
+
+	public String getEmail() {
 		return email;
 	}
-	public void setMiddleName(String email) {
+
+
+
+
+	public void setEmail(String email) {
 		this.email = email;
 	}
+
+
+
+
 	public String getLastName() {
 		return lastName;
 	}
+
+
+
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+
 	public String getUserType() {
 		return userType;
 	}
+
+
+
+
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	public Date getCreationDate() {
+
+
+
+
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
-	public void setCreationDate(Date creationDate) {
+
+
+
+
+	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName + ", email=" + email + ", lastName=" + lastName
+				+ ", password=" + password + ", userType=" + userType + ", creationDate=" + creationDate + "]";
+	}
+	
+	
+	
+	
+	
 	
 	
 }

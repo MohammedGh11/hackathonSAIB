@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "category")
@@ -21,7 +21,7 @@ public class Category {
 	
 	@Column(name = "cat_name")
 	private String catName;
-	
+	@CreatedDate
 	@Column(name = "creation_date")
 	private Date creationDate;
 	

@@ -1,11 +1,13 @@
 package com.SAIB.IdeationPlatform.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 
 import com.SAIB.IdeationPlatform.model.User;
 import com.SAIB.IdeationPlatform.repository.UserRepository;
@@ -41,4 +43,20 @@ public class UserService {
 		
 		return result;
 	}
+
+
+
+	public User getUserById(long userId) {
+		Optional<User> optional=userRepository.findById(userId);
+		
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User with UserId:"+userId+"doesn't exist");
+		}
+	}
+
+
+
 }

@@ -2,6 +2,7 @@ package com.SAIB.IdeationPlatform.model;
 
 import java.util.Date;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,10 +10,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedDate;
+
 @Entity
 @Table(name = "comments")
 public class Comments {
 	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Comment_ID")
+	private long commentId;
+	
+	@Column(name = "text")
+	private String text;
+	@Column(name = "p_id")
+	private long pID;
+	@Column(name = "u_id")
+	private long uID;
+	@CreatedDate
+	@Column(name = "creation_date")
+	private Date creationDate;
+
 	
 	public Comments() {
 		super();
@@ -61,17 +80,4 @@ public class Comments {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Comment_ID")
-	private long commentId;
-	
-	@Column(name = "text")
-	private String text;
-	@Column(name = "p_id")
-	private long pID;
-	@Column(name = "u_id")
-	private long uID;
-	@Column(name = "creation_date")
-	private Date creationDate;
 }

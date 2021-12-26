@@ -1,9 +1,14 @@
 package com.SAIB.IdeationPlatform.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -112,5 +117,55 @@ public class PostService {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Post with Post Number:"+postId+"doesn't exist");
 			}
 			
+		}
+
+		public List<Post> getAllPosts(int pageNo, int pageSize, String sortBy) {
+			
+			Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+			Page<Post> pageResult=postRepository.findAll(paging);
+			int total = pageResult.getTotalPages();
+			System.out.println(total);
+			
+			if(pageResult.hasContent()) {
+				return pageResult.getContent();
+			}
+			else
+				return new ArrayList<Post>();
+		}
+
+		public String upVoteByPostId(long postId) {
+			
+				Optional<Post> optional =postRepository.findById(postId);
+				
+				String result;
+				if(optional.isPresent()) {
+					Post post =optional.get();
+					post.setVoteUp(post.getVoteUp()+1);
+					postRepository.save(post);
+					result=Results.SUCCESS;
+					return result;
+				}
+				else {
+					throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Post with Post Number:"+postId+"doesn't exist");
+				}
+				
+		}
+
+		public String downVoteByPostId(long postId) {
+
+
+			Optional<Post> optional =postRepository.findById(postId);
+			
+			String result;
+			if(optional.isPresent()) {
+				Post post =optional.get();
+				post.setVoteDown(post.getVoteDown()+1);
+				postRepository.save(post);
+				result=Results.SUCCESS;
+				return result;
+			}
+			else {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Post with Post Number:"+postId+"doesn't exist");
+			}
 		}
 }

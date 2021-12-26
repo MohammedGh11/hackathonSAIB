@@ -1,6 +1,7 @@
 package com.SAIB.IdeationPlatform.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,19 @@ public class CategoryService {
 		
 		return result;
 	}
-	
+
+	public Category getCategoryById(long categoryId)
+	{
+		
+		Optional<Category> optional=categoryRepository.findById(categoryId);
+		
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Category with Category Number:"+categoryId+"doesn't exist");
+		}
+		
+	}
 	
 }
