@@ -68,9 +68,9 @@ public class Comments {
 	
 	@Column(name = "text")
 	private String text;
-	@Column(name = "p_ID")
+	@Column(name = "p_id")
 	private long pID;
-	@Column(name = "u_ID")
+	@Column(name = "u_id")
 	private long uID;
 	@Column(name = "creation_date")
 	private Date creationDate;

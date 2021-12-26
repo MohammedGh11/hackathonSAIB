@@ -15,6 +15,7 @@ import javax.persistence.Table;
 public class Category {
 		
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cat_id")
 	private long catID;
 	
