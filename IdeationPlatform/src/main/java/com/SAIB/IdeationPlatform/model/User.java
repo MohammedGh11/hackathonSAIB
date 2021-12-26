@@ -15,14 +15,14 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "u_id" )
+	@Column(name = "user_id" )
 	private long userId;
 	
 	
 	@Column(name = "first_name")
 	private String firstName;
-	@Column(name = "middle_name")
-	private String middleName;
+	@Column(name = "email")
+	private String email;
 	@Column(name = "last_name")
 	private String lastName;
 	@Column(name = "user_type")
@@ -33,18 +33,18 @@ public class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(long userId, String firstName, String middleName, String lastName, String userType, Date creationDate) {
+	public User(long userId, String firstName, String email, String lastName, String userType, Date creationDate) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
-		this.middleName = middleName;
+		this.email = email;
 		this.lastName = lastName;
 		this.userType = userType;
 		this.creationDate = creationDate;
 	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+		return "User [userId=" + userId + ", firstName=" + firstName + ", email=" + email + ", lastName="
 				+ lastName + ", userType=" + userType + ", creationDate=" + creationDate + "]";
 	}
 	public long getUserId() {
@@ -60,10 +60,10 @@ public class User {
 		this.firstName = firstName;
 	}
 	public String getMiddleName() {
-		return middleName;
+		return email;
 	}
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setMiddleName(String email) {
+		this.email = email;
 	}
 	public String getLastName() {
 		return lastName;
