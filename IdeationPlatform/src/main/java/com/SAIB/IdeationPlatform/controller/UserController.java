@@ -53,8 +53,7 @@ public class UserController {
 	{
 		ResponseEntity<ApiSuccessPayload> response=null;
 		System.out.println(user);
-		@Valid User  valid = user;
-		String result=userService.addUser(valid);
+		String result=userService.addUser(user);
 		if(result.equalsIgnoreCase(Results.SUCCESS))
 		{
 			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "User created successfully", HttpStatus.CREATED);
@@ -64,6 +63,23 @@ public class UserController {
 		return response;
 	
 	}
+	
+	@PostMapping("/signup")
+	public ResponseEntity<ApiSuccessPayload> createUser(@Valid @RequestBody User user)
+	{
+		ResponseEntity<ApiSuccessPayload> response=null;
+		System.out.println(user);
+		String result=userService.createUser(user);
+		if(result.equalsIgnoreCase(Results.SUCCESS))
+		{
+			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "User created successfully", HttpStatus.CREATED);
+			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+		}
+		
+		return response;
+	
+	}
+	
 	
 	
 	
