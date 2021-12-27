@@ -36,7 +36,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Use BCryptPasswordEncoder
 		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 	}
+	
+	   private static final String[] AUTH_WHITELIST = {
+			   
+			    //Public routes
+				   "/authenticate",
+		            "/signup",
+	            
+	            //dev routes
+		            // -- Swagger UI v2
+		            "/v2/api-docs",
+		            "/swagger-resources",
+		            "/swagger-resources/**",
+		            "/configuration/ui",
+		            "/configuration/security",
+		            "/swagger-ui.html",
+		            "/webjars/**",
+		            // -- Swagger UI v3 (OpenAPI)
+		            "/v3/api-docs/**",
+		            "/swagger-ui/**",
+	           
+	          
+	    };
 
+	
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -53,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// We don't need CSRF for this example
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate","/signup","/swagger-ui").permitAll().
+				.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll().
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
@@ -65,4 +89,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
+	
+	
+
+
+	
+	
+	
 }
