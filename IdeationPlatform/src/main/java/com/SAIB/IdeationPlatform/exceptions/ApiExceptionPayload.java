@@ -3,6 +3,10 @@ package com.SAIB.IdeationPlatform.exceptions;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
 
 public class ApiExceptionPayload {
 
@@ -13,6 +17,7 @@ public class ApiExceptionPayload {
 	private boolean exception;
 	private String path;
 	private LocalDateTime timestamp;
+	private Map<String, String> map;
 	
 	
 	public ApiExceptionPayload() {
@@ -25,6 +30,19 @@ public class ApiExceptionPayload {
 			String path, LocalDateTime timestamp) {
 		super();
 		this.message = message;
+		this.status = status;
+		this.httpStatus = httpStatus;
+		this.success = success;
+		this.exception = exception;
+		this.path = path;
+		this.timestamp = timestamp;
+	}
+
+	
+	public ApiExceptionPayload(Map<String, String> map, int status, String httpStatus, boolean success, boolean exception,
+			String path, LocalDateTime timestamp) {
+		super();
+		this.map = map;
 		this.status = status;
 		this.httpStatus = httpStatus;
 		this.success = success;
@@ -111,6 +129,7 @@ public class ApiExceptionPayload {
 		message=message.replace("\"","");
 		return message;
 	}
+
 	
 	
 	

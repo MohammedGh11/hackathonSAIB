@@ -2,6 +2,8 @@ package com.SAIB.IdeationPlatform.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,11 +49,12 @@ public class UserController {
 	
 	
 	@PostMapping("/user")
-	public ResponseEntity<ApiSuccessPayload> addUser(@RequestBody User user)
+	public ResponseEntity<ApiSuccessPayload> addUser(@Valid @RequestBody User user)
 	{
 		ResponseEntity<ApiSuccessPayload> response=null;
 		System.out.println(user);
-		String result=userService.addUser(user);
+		@Valid User  valid = user;
+		String result=userService.addUser(valid);
 		if(result.equalsIgnoreCase(Results.SUCCESS))
 		{
 			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "User created successfully", HttpStatus.CREATED);

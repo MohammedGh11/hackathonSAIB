@@ -76,6 +76,61 @@ public class PostController {
 	}
 	
 	
+	@PostMapping("/post/addapplicationscore")
+	public ResponseEntity<ApiSuccessPayload> addApplicationScoreByPostId(@RequestParam long postId , @RequestParam int score)
+	{
+	
+		
+		ResponseEntity<ApiSuccessPayload> response=null;
+		
+		String result=postService.addApplicationScoreByPostId(postId,score);
+		
+		if(result.equalsIgnoreCase(Results.SUCCESS))
+		{
+			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
+			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+		}
+		
+		return response;
+	}
+	
+	@PostMapping("/post/addfeasibilityScore")
+	public ResponseEntity<ApiSuccessPayload> addFeasibilityScoreByPostId(@RequestParam long postId , @RequestParam int score)
+	{
+	
+		
+		ResponseEntity<ApiSuccessPayload> response=null;
+		
+		String result=postService.addFeasibilityScoreByPostId(postId,score);
+		
+		if(result.equalsIgnoreCase(Results.SUCCESS))
+		{
+			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
+			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+		}
+		
+		return response;
+	}
+	
+	
+	@PostMapping("/post/addcostscore")
+	public ResponseEntity<ApiSuccessPayload> addCostScoreByPostId(@RequestParam long postId , @RequestParam int score)
+	{
+	
+		
+		ResponseEntity<ApiSuccessPayload> response=null;
+		
+		String result=postService.addCostScoreByPostId(postId,score);
+		
+		if(result.equalsIgnoreCase(Results.SUCCESS))
+		{
+			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
+			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+		}
+		
+		return response;
+	}
+	
 	@GetMapping("/post/downvote/{postId}")
 	public ResponseEntity<ApiSuccessPayload> downVoteByPostId(@PathVariable long postId)
 	{

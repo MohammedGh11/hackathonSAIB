@@ -11,6 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -22,13 +27,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id" )
 	private long userId;
-	
-	
 	@Column(name = "first_name")
 	private String firstName;
 	@Column(name = "last_name")
 	private String lastName;
+	@NotNull
+	@Email(message = "Email should be valid")
 	@Column(name = "email")
+	@Valid
 	private String email;
 	@Column(name = "password")
 	private String password;
@@ -59,6 +65,7 @@ public class User {
 		this.password = password;
 		this.userType = userType;
 		this.creationDate = creationDate;
+		
 	}
 
 

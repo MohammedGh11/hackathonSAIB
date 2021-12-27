@@ -168,4 +168,69 @@ public class PostService {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Post with Post Number:"+postId+"doesn't exist");
 			}
 		}
+
+		public String addApplicationScoreByPostId(long postId , int score) {
+
+			Optional<Post> optional = postRepository.findById(postId);
+			
+			String result;
+			if(optional.isPresent()) {
+				
+				
+				Post post =optional.get();
+				post.setAppReviewedScore(score);
+				post.setStatus("public");
+				Long cumulativeScore = (post.getAppReviewedScore()+post.getCost_score()+post.getFeasibilityScore())/3;
+				post.setScore(cumulativeScore);
+				postRepository.save(post);
+				result=Results.SUCCESS;
+				return result;
+			}
+			else {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Post with Post Number:"+postId+"doesn't exist");
+			}
+		}
+		
+		public String addCostScoreByPostId(long postId , int score) {
+
+			Optional<Post> optional =postRepository.findById(postId);
+			
+			String result;
+			if(optional.isPresent()) {
+				
+				
+				Post post =optional.get();
+				post.setCost_score(score);
+				Long cumulativeScore = (post.getAppReviewedScore()+post.getCost_score()+post.getFeasibilityScore())/3;
+				post.setScore(cumulativeScore);
+				postRepository.save(post);
+				result=Results.SUCCESS;
+				return result;
+			}
+			else {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Post with Post Number:"+postId+"doesn't exist");
+			}
+		}
+		
+		
+		public String addFeasibilityScoreByPostId(long postId , int score) {
+
+			Optional<Post> optional =postRepository.findById(postId);
+			
+			String result;
+			if(optional.isPresent()) {
+				
+				
+				Post post =optional.get();
+				post.setFeasibilityScore(score);
+				Long cumulativeScore = (post.getAppReviewedScore()+post.getCost_score()+post.getFeasibilityScore())/3;
+				post.setScore(cumulativeScore);
+				postRepository.save(post);
+				result=Results.SUCCESS;
+				return result;
+			}
+			else {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Post with Post Number:"+postId+"doesn't exist");
+			}
+		}
 }
