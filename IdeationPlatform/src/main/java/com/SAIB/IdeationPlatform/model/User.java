@@ -3,7 +3,8 @@ package com.SAIB.IdeationPlatform.model;
 
 
 import java.time.LocalDateTime;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.GenerationTime;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
@@ -27,29 +30,33 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id" )
 	private long userId;
+	@NotNull
 	@Column(name = "first_name")
 	private String firstName;
+	@NotNull
 	@Column(name = "last_name")
 	private String lastName;
 	@NotNull
 	@Email(message = "Email should be valid")
 	@Column(name = "email")
-	@Valid
 	private String email;
+	@NotNull
 	@Column(name = "password")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[$@–[{}]:;',?/*~$^+=<>]).{8,15}$")
 	private String password;
+	@NotNull
 	@Column(name = "user_type")
 	private String userType;
 	@CreatedDate
 	@Column(name = "creation_date")
 	private LocalDateTime creationDate;
 	
+
 	
 	
 	
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
