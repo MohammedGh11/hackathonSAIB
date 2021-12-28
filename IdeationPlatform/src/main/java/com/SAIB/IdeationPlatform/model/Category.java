@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
@@ -19,6 +22,8 @@ public class Category {
 	@Column(name = "cat_id")
 	private long catID;
 	
+	@NotNull
+	@NotBlank
 	@Column(name = "cat_name")
 	private String catName;
 	@CreatedDate

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SAIB.IdeationPlatform.config.ApiSuccessPayload;
@@ -48,12 +49,13 @@ public class UserController {
 	}
 	
 	
-	@PostMapping("/user")
-	public ResponseEntity<ApiSuccessPayload> addUser(@Valid @RequestBody User user)
+	@PostMapping("/user" )
+	public ResponseEntity<ApiSuccessPayload> addUser(@Valid @RequestBody User user ,@RequestHeader (name="Authorization") String token)
 	{
 		ResponseEntity<ApiSuccessPayload> response=null;
 		System.out.println(user);
-		String result=userService.addUser(user);
+		String result=userService.addUser(user , token);
+		
 		if(result.equalsIgnoreCase(Results.SUCCESS))
 		{
 			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "User created successfully", HttpStatus.CREATED);

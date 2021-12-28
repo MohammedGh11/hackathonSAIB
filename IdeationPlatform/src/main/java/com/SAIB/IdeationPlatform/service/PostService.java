@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.SAIB.IdeationPlatform.config.JwtTokenUtil;
 import com.SAIB.IdeationPlatform.model.Post;
 import com.SAIB.IdeationPlatform.repository.PostRepository;
 import com.SAIB.IdeationPlatform.util.Results;
@@ -22,7 +23,10 @@ public class PostService {
 	
 	@Autowired
 	PostRepository postRepository;
-
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	UserService userService;
 
 	public List<Post> getAllPost()
 	{
@@ -32,9 +36,14 @@ public class PostService {
 		
 	}
 
-	public String addPost(Post post)
+	public String addPost(Post post, String token)
 	{
 		String result="";
+		token = jwtTokenUtil.removeBearer(token);
+		long userId = userService.getUserIdByEmail(jwtTokenUtil.getUsernameFromToken(token));
+		if(userId!= post.getuId()) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Error code 00001");
+		}
 		Post storedPost=postRepository.save(post);
 		if(storedPost!=null) {
 			result=Results.SUCCESS;

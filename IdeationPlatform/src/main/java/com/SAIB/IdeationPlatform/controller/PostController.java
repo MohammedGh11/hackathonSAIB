@@ -2,6 +2,8 @@ package com.SAIB.IdeationPlatform.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.SAIB.IdeationPlatform.config.ApiSuccessPayload;
@@ -149,11 +152,11 @@ public class PostController {
 	}
 	
 	@PostMapping("/post")
-	public ResponseEntity<ApiSuccessPayload> addPost(@RequestBody Post post)
+	public ResponseEntity<ApiSuccessPayload> addPost(@Valid @RequestBody Post post, @RequestHeader (name="Authorization") String token)
 	{
 		ResponseEntity<ApiSuccessPayload> response=null;
 		System.out.println(post);
-		String result=postService.addPost(post);
+		String result=postService.addPost(post,token);
 		if(result.equalsIgnoreCase(Results.SUCCESS))
 		{
 			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
@@ -165,7 +168,7 @@ public class PostController {
 	}
 	
 	@PutMapping("/post/{postNumber}")
-	public ResponseEntity<ApiSuccessPayload> updatePost(@RequestBody Post post, @PathVariable long postNumber)
+	public ResponseEntity<ApiSuccessPayload> updatePost(@Valid @RequestBody Post post, @PathVariable long postNumber)
 	{
 		String result=postService.updatePost(post, postNumber);
 		ApiSuccessPayload payload=ApiSuccessPayload.build(result,result,HttpStatus.OK);

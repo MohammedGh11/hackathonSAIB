@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "post")
@@ -17,7 +19,8 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "post_id")
 	private long postId;
-	
+	@NotNull
+	@NotBlank
 	@Column(name = "idea")
 	private String idea;
 	@Column(name = "vote_up")
@@ -40,10 +43,12 @@ public class Post {
 	private long appReviewedScore;
 	@Column(name = "score")
 	private long score;
+	@NotNull
 	@Column(name = "u_id")
 	private long uId;
 	@Column(name = "creation_date")
 	private Date creationDate;
+	@NotNull
 	@Column(name = "c_id")
 	private long cId;
 	

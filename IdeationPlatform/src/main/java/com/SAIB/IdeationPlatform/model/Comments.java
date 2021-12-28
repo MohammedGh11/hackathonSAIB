@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -21,11 +23,16 @@ public class Comments {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Comment_ID")
 	private long commentId;
-	
+	@NotNull
+	@NotBlank
 	@Column(name = "text")
 	private String text;
+	@NotNull
+	@NotBlank
 	@Column(name = "p_id")
 	private long pID;
+	@NotNull
+	@NotBlank
 	@Column(name = "u_id")
 	private long uID;
 	@CreatedDate
