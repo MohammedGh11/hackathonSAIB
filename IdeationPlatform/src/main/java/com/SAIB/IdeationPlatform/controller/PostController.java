@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.SAIB.IdeationPlatform.config.ApiSuccessPayload;
 import com.SAIB.IdeationPlatform.model.Post;
 import com.SAIB.IdeationPlatform.service.PostService;
@@ -26,162 +27,150 @@ public class PostController {
 
 	@Autowired
 	PostService postService;
-	
-	
+
 	@GetMapping("/posts")
-	public ResponseEntity<ApiSuccessPayload> getAllPosts()
-	{
-		List<Post> list=postService.getAllPost();
-		
-		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Posts Fetched", HttpStatus.OK);
-		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
-		
+	public ResponseEntity<ApiSuccessPayload> getAllPosts() {
+		List<Post> list = postService.getAllPost();
+
+		ApiSuccessPayload payload = ApiSuccessPayload.build(list, "Posts Fetched", HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.OK);
+
 		return response;
-		
+
 	}
+
 	@GetMapping("/posts/all/sorted")
-	public ResponseEntity<ApiSuccessPayload> getAllPosts(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam String sortBy ){
-		
-		
-		List<Post> list=postService.getAllPosts(pageNo, pageSize ,sortBy);
-		HttpStatus status=HttpStatus.OK;
-		ApiSuccessPayload payload=ApiSuccessPayload.build(list, "Posts Found",status);
-		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload, status);
+	public ResponseEntity<ApiSuccessPayload> getAllPosts(@RequestParam int pageNo, @RequestParam int pageSize,
+			@RequestParam String sortBy) {
+
+		List<Post> list = postService.getAllPosts(pageNo, pageSize, sortBy);
+		HttpStatus status = HttpStatus.OK;
+		ApiSuccessPayload payload = ApiSuccessPayload.build(list, "Posts Found", status);
+		ResponseEntity<ApiSuccessPayload> response = new ResponseEntity<ApiSuccessPayload>(payload, status);
 		return response;
-		
-		
+
 	}
+
 	@GetMapping("/post/{postId}")
-	public ResponseEntity<ApiSuccessPayload> getPostbyPostNumber(@PathVariable long postId)
-	{
-		Post post=postService.getPostByPostNumber(postId);
-		
-		ApiSuccessPayload payload=ApiSuccessPayload.build(post, "Success",HttpStatus.OK);
-		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.OK);
+	public ResponseEntity<ApiSuccessPayload> getPostbyPostNumber(@PathVariable long postId) {
+		Post post = postService.getPostByPostNumber(postId);
+
+		ApiSuccessPayload payload = ApiSuccessPayload.build(post, "Success", HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.OK);
 		return response;
 	}
-	
+
 	@GetMapping("/post/upvote/{postId}")
-	public ResponseEntity<ApiSuccessPayload> upVoteByPostId(@PathVariable long postId)
-	{
-	
-		
-		ResponseEntity<ApiSuccessPayload> response=null;
-		
-		String result=postService.upVoteByPostId(postId);
-		if(result.equalsIgnoreCase(Results.SUCCESS))
-		{
-			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
-			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+	public ResponseEntity<ApiSuccessPayload> upVoteByPostId(@PathVariable long postId) {
+
+		ResponseEntity<ApiSuccessPayload> response = null;
+
+		String result = postService.upVoteByPostId(postId);
+		if (result.equalsIgnoreCase(Results.SUCCESS)) {
+			ApiSuccessPayload payload = ApiSuccessPayload.build(result, "Post created successfully",
+					HttpStatus.CREATED);
+			response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.CREATED);
 		}
-		
+
 		return response;
 	}
-	
-	
+
 	@PostMapping("/post/addapplicationscore")
-	public ResponseEntity<ApiSuccessPayload> addApplicationScoreByPostId(@RequestParam long postId , @RequestParam int score)
-	{
-	
-		
-		ResponseEntity<ApiSuccessPayload> response=null;
-		
-		String result=postService.addApplicationScoreByPostId(postId,score);
-		
-		if(result.equalsIgnoreCase(Results.SUCCESS))
-		{
-			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
-			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+	public ResponseEntity<ApiSuccessPayload> addApplicationScoreByPostId(@RequestParam long postId,
+			@RequestParam int score, @RequestHeader(name = "Authorization") String token) {
+
+		ResponseEntity<ApiSuccessPayload> response = null;
+
+		String result = postService.addApplicationScoreByPostId(postId, score, token);
+
+		if (result.equalsIgnoreCase(Results.SUCCESS)) {
+			ApiSuccessPayload payload = ApiSuccessPayload.build(result, "Post created successfully",
+					HttpStatus.CREATED);
+			response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.CREATED);
 		}
-		
+
 		return response;
 	}
-	
+
 	@PostMapping("/post/addfeasibilityScore")
-	public ResponseEntity<ApiSuccessPayload> addFeasibilityScoreByPostId(@RequestParam long postId , @RequestParam int score)
-	{
-	
-		
-		ResponseEntity<ApiSuccessPayload> response=null;
-		
-		String result=postService.addFeasibilityScoreByPostId(postId,score);
-		
-		if(result.equalsIgnoreCase(Results.SUCCESS))
-		{
-			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
-			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+	public ResponseEntity<ApiSuccessPayload> addFeasibilityScoreByPostId(@RequestParam long postId,
+			@RequestParam int score, @RequestHeader(name = "Authorization") String token) {
+
+		ResponseEntity<ApiSuccessPayload> response = null;
+
+		String result = postService.addFeasibilityScoreByPostId(postId, score, token);
+
+		if (result.equalsIgnoreCase(Results.SUCCESS)) {
+			ApiSuccessPayload payload = ApiSuccessPayload.build(result, "Post created successfully",
+					HttpStatus.CREATED);
+			response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.CREATED);
 		}
-		
+
 		return response;
 	}
-	
-	
+
 	@PostMapping("/post/addcostscore")
-	public ResponseEntity<ApiSuccessPayload> addCostScoreByPostId(@RequestParam long postId , @RequestParam int score)
-	{
-	
-		
-		ResponseEntity<ApiSuccessPayload> response=null;
-		
-		String result=postService.addCostScoreByPostId(postId,score);
-		
-		if(result.equalsIgnoreCase(Results.SUCCESS))
-		{
-			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
-			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+	public ResponseEntity<ApiSuccessPayload> addCostScoreByPostId(@RequestParam long postId, @RequestParam int score,
+			@RequestHeader(name = "Authorization") String token) {
+
+		ResponseEntity<ApiSuccessPayload> response = null;
+
+		String result = postService.addCostScoreByPostId(postId, score, token);
+
+		if (result.equalsIgnoreCase(Results.SUCCESS)) {
+			ApiSuccessPayload payload = ApiSuccessPayload.build(result, "Post created successfully",
+					HttpStatus.CREATED);
+			response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.CREATED);
 		}
-		
+
 		return response;
 	}
-	
+
 	@GetMapping("/post/downvote/{postId}")
-	public ResponseEntity<ApiSuccessPayload> downVoteByPostId(@PathVariable long postId)
-	{
-	
-		
-		ResponseEntity<ApiSuccessPayload> response=null;
-		
-		String result=postService.downVoteByPostId(postId);
-		if(result.equalsIgnoreCase(Results.SUCCESS))
-		{
-			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
-			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+	public ResponseEntity<ApiSuccessPayload> downVoteByPostId(@PathVariable long postId) {
+
+		ResponseEntity<ApiSuccessPayload> response = null;
+
+		String result = postService.downVoteByPostId(postId);
+		if (result.equalsIgnoreCase(Results.SUCCESS)) {
+			ApiSuccessPayload payload = ApiSuccessPayload.build(result, "Post created successfully",
+					HttpStatus.CREATED);
+			response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.CREATED);
 		}
-		
+
 		return response;
 	}
-	
+
 	@PostMapping("/post")
-	public ResponseEntity<ApiSuccessPayload> addPost(@Valid @RequestBody Post post, @RequestHeader (name="Authorization") String token)
-	{
-		ResponseEntity<ApiSuccessPayload> response=null;
-		System.out.println(post);
-		String result=postService.addPost(post,token);
-		if(result.equalsIgnoreCase(Results.SUCCESS))
-		{
-			ApiSuccessPayload payload=ApiSuccessPayload.build(result, "Post created successfully", HttpStatus.CREATED);
-			response=new ResponseEntity<ApiSuccessPayload>(payload,HttpStatus.CREATED);
+	public ResponseEntity<ApiSuccessPayload> addPost(@Valid @RequestBody Post post,
+			@RequestHeader(name = "Authorization") String token) {
+		ResponseEntity<ApiSuccessPayload> response = null;
+		String result = postService.addPost(post, token);
+		if (result.equalsIgnoreCase(Results.SUCCESS)) {
+			ApiSuccessPayload payload = ApiSuccessPayload.build(result, "Post created successfully",
+					HttpStatus.CREATED);
+			response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.CREATED);
 		}
-		
+
 		return response;
-	
+
 	}
-	
+
 	@PutMapping("/post/{postNumber}")
-	public ResponseEntity<ApiSuccessPayload> updatePost(@Valid @RequestBody Post post, @PathVariable long postNumber)
-	{
-		String result=postService.updatePost(post, postNumber);
-		ApiSuccessPayload payload=ApiSuccessPayload.build(result,result,HttpStatus.OK);
-		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.OK);
+	public ResponseEntity<ApiSuccessPayload> updatePost(@Valid @RequestBody Post post, @PathVariable long postNumber,
+			@RequestHeader(name = "Authorization") String token) {
+		String result = postService.updatePost(post, postNumber, token);
+		ApiSuccessPayload payload = ApiSuccessPayload.build(result, result, HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.OK);
 		return response;
 	}
-	
+
 	@DeleteMapping("/post/{postNumber}")
-	public ResponseEntity<ApiSuccessPayload> deletePost(@PathVariable long postNumber)
-	{
-		String result=postService.deletePost(postNumber);
-		ApiSuccessPayload payload=ApiSuccessPayload.build(result,result,HttpStatus.OK);
-		ResponseEntity<ApiSuccessPayload> response=new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.OK);
+	public ResponseEntity<ApiSuccessPayload> deletePost(@PathVariable long postNumber,
+			@RequestHeader(name = "Authorization") String token) {
+		String result = postService.deletePost(postNumber, token);
+		ApiSuccessPayload payload = ApiSuccessPayload.build(result, result, HttpStatus.OK);
+		ResponseEntity<ApiSuccessPayload> response = new ResponseEntity<ApiSuccessPayload>(payload, HttpStatus.OK);
 		return response;
 	}
 }

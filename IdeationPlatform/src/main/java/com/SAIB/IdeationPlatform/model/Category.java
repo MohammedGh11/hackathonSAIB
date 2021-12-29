@@ -10,61 +10,69 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "category")
 public class Category {
-		
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cat_id")
+	@Column(name = "cat_id", unique = true)
 	private long catID;
-	
+
 	@NotNull
 	@NotBlank
+	@Pattern(regexp = "[^/%']+", message = "The following characters is not allowed [/%']")
 	@Column(name = "cat_name")
 	private String catName;
+	@CreationTimestamp
 	@CreatedDate
 	@Column(name = "creation_date")
 	private Date creationDate;
-	
+
 	public Category() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public Category(long catID, String catName, Date creationDate) {
 		super();
 		this.catID = catID;
 		this.catName = catName;
 		this.creationDate = creationDate;
 	}
+
 	@Override
 	public String toString() {
 		return "Category [catID=" + catID + ", catName=" + catName + ", creationDate=" + creationDate + "]";
 	}
+
 	public long getCatID() {
 		return catID;
 	}
+
 	public void setCatID(long catID) {
 		this.catID = catID;
 	}
+
 	public String getCatName() {
 		return catName;
 	}
+
 	public void setCatName(String catName) {
 		this.catName = catName;
 	}
+
 	public Date getCreationDate() {
 		return creationDate;
 	}
+
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	
-	
-	
-	
-	
+
 }

@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.SAIB.IdeationPlatform.config.JwtTokenUtil;
 import com.SAIB.IdeationPlatform.model.JwtRequest;
 import com.SAIB.IdeationPlatform.model.JwtResponse;
-
 
 @RestController
 @CrossOrigin
@@ -36,24 +34,22 @@ public class JwtAuthenticationController {
 	private UserDetailsService jwtInMemoryUserDetailsService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
-			throws Exception {
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-		
-		//bring from DB
+
+		// bring from DB
 		final UserDetails userDetails = jwtInMemoryUserDetailsService
 				.loadUserByUsername(authenticationRequest.getEmail());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 
 	private void authenticate(String username, String password) throws Exception {
-		Objects.requireNonNull(username);
+		Objects.requireNonNull(username.toLowerCase());
 		Objects.requireNonNull(password);
-
+		username = username.toLowerCase();
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {

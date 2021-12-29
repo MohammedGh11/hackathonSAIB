@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "post")
@@ -17,16 +20,18 @@ public class Post {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "post_id")
+	@Column(name = "post_id", unique = true)
 	private long postId;
 	@NotNull
 	@NotBlank
+	@Pattern(regexp = "[^/%']+", message = "The following characters is not allowed [/%']")
 	@Column(name = "idea")
 	private String idea;
 	@Column(name = "vote_up")
 	private long voteUp;
 	@Column(name = "vote_down")
 	private long voteDown;
+	@Pattern(regexp = "[^/%']+", message = "The following characters is not allowed [/%']")
 	@Column(name = "status")
 	private String status;
 	@Column(name = "cost_reviewed_by")
@@ -46,12 +51,12 @@ public class Post {
 	@NotNull
 	@Column(name = "u_id")
 	private long uId;
+	@CreationTimestamp
 	@Column(name = "creation_date")
 	private Date creationDate;
-	@NotNull
 	@Column(name = "c_id")
 	private long cId;
-	
+
 	public Post() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -206,9 +211,5 @@ public class Post {
 				+ ", appReviewedBy=" + appReviewedBy + ", appReviewedScore=" + appReviewedScore + ", score=" + score
 				+ ", uId=" + uId + ", creationDate=" + creationDate + ", cId=" + cId + "]";
 	}
-	
-	
-	
-	
-		
+
 }
